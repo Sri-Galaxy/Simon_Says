@@ -30,12 +30,12 @@ document.addEventListener("keypress", function () {
 
 function btnFlsh(button) {
   button.classList.add("flash");
+
   if (randColor == "btn1") {
     audio1.play();
     audio1.playbackRate = 2;
   } else if (randColor == "btn2") {
     audio2.play();
-    audio2.playbackRate = 1.25;
   } else if (randColor == "btn3") {
     audio3.play();
     audio3.playbackRate = 2;
@@ -51,9 +51,23 @@ function btnFlsh(button) {
 
 function usrFlsh(button) {
   button.classList.add("usrflash");
+
+  // if (userColor == "btn1") {
+  //   audio1.play();
+  //   audio1.playbackRate = 2;
+  // } else if (userColor == "btn2") {
+  //   audio2.play();
+  // } else if (userColor == "btn3") {
+  //   audio3.play();
+  //   audio3.playbackRate = 2;
+  // } else {
+  //   audio4.play();
+  //   audio4.playbackRate = 1.5;
+  // }
+
   setTimeout(function () {
     button.classList.remove("usrflash");
-  }, 250);
+  }, 300);
 }
 
 function lvlUp() {
@@ -61,12 +75,21 @@ function lvlUp() {
   lvl++;
   h2.innerText = `Level ${lvl}`;
 
+  for (let btn of ans) {
+    let randbtn = document.querySelector(`.${btn}`);
+    setTimeout(() => btnFlsh(randbtn), 1000);
+  }
+
   let randidx = Math.floor(Math.random() * 4);
   randColor = btns[randidx];
-  let randbtn = document.querySelector(`.${randColor}`);
 
   ans.push(randColor);
-  btnFlsh(randbtn);
+  console.log(ans);
+
+  setTimeout(() => {
+    let newBtn = document.querySelector(`.${randColor}`);
+    btnFlsh(newBtn);
+  }, 1000 + (ans.length - 1) * 1000);
 }
 
 function isValid(idx) {
